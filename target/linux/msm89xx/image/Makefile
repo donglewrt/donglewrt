@@ -19,6 +19,11 @@ define Build/aboot-img
 endef
 
 define Build/sparse-img
+	@SIZE=`stat -c%s "$@"`; \
+	SPARSE_BLOCK_SIZE=4096; \
+	ROUNDED_SIZE=$$(( (SIZE + SPARSE_BLOCK_SIZE - 1) / SPARSE_BLOCK_SIZE * SPARSE_BLOCK_SIZE )); \
+	echo "truncated from: $$SIZE bytes, to $$ROUNDED_SIZE bytes."; \
+	truncate -s $$ROUNDED_SIZE "$@"
 	img2simg  $@ $@.new
 	mv $@.new $@
 endef

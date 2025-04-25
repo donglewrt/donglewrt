@@ -89,6 +89,16 @@ define Device/openstick-mf601
 endef
 TARGET_DEVICES += openstick-mf601
 
+define Device/openstick-mfx32
+  $(Device/msm8916)
+  DEVICE_VENDOR := XinXun
+  DEVICE_MODEL := OpenStick MFX32
+  DEVICE_DTS := msm8916-ufi-mfx32
+    DEVICE_DTS_DIR := ../dts
+  DEVICE_PACKAGES := openstick-tweaks wpad-basic-wolfssl qcom-msm8916-modem-openstick-mf32-firmware qcom-msm8916-openstick-mf32-wcnss-firmware qcom-msm8916-wcnss-openstick-mf32-nv
+endef
+TARGET_DEVICES += openstick-mfx32
+
 define Device/openstick-wf2
   $(Device/msm8916)
   DEVICE_VENDOR := XinXun
@@ -98,5 +108,4 @@ define Device/openstick-wf2
   DEVICE_PACKAGES := openstick-tweaks wpad-basic-wolfssl qcom-msm8916-modem-openstick-wf2-firmware qcom-msm8916-openstick-wf2-wcnss-firmware qcom-msm8916-wcnss-openstick-wf2-nv kmod-gpio-button-hotplug kmod-button-hotplug kmod-input-gpio-keys kmod-input-gpio-keys-polled
 endef
 TARGET_DEVICES += openstick-wf2
-
 endif

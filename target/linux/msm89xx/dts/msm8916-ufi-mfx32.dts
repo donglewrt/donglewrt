@@ -1,0 +1,356 @@
+// SPDX-License-Identifier: GPL-2.0-only
+
+/dts-v1/;
+
+#include "msm8916-ufi.dtsi"
+
+/ {
+	model = "ufi-mfx32 4G Modem Stick";
+	compatible = "thwc,ufi-mfx32", "qcom,msm8916";
+
+	battery: battery {
+		compatible = "simple-battery";
+		voltage-min-design-microvolt = <3400000>;
+		voltage-max-design-microvolt = <4350000>;
+		charge-full-design-microamp-hours = <2100000>;
+
+		ocv-capacity-celsius = <25>;
+		ocv-capacity-table-0 = < 4327000 100 >,
+							   < 4264000 95 >,
+							   < 4187000 90 >,
+							   < 4119000 85 >,
+							   < 4069000 80 >,
+							   < 4022000 75 >,
+							   < 3964000 70 >,
+							   < 9624000 65 >,
+							   < 3890000 60 >,
+							   < 3853000 55 >,
+							   < 3801000 50 >,
+							   < 3778000 45 >,
+							   < 3769000 40 >,
+							   < 3766000 35 >,
+							   < 3760000 30 >,
+							   < 3721000 25 >,
+							   < 3660000 20 >,
+							   < 3608000 16 >,
+							   < 3579000 13 >,
+							   < 3563000 11 >,
+							   < 3548000 10 >,
+							   < 3531000 9 >,
+							   < 3520000 8 >,
+							   < 3514000 7 >,
+							   < 3502000 6 >,
+							   < 3495000 5 >,
+							   < 3489000 4 >,
+							   < 3475000 3 >,
+							   < 3460000 2 >,
+							   < 3444000 1 >,
+							   < 3400000 0 >;
+	};
+
+	usb_id: usb-id {
+		compatible = "linux,extcon-usb-gpio";
+		id-gpio = <&msmgpio 110 GPIO_ACTIVE_HIGH>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&usb_id_default>;
+	};
+};
+
+&button_restart {
+	gpios = <&msmgpio 34 GPIO_ACTIVE_LOW>;
+};
+
+&led_r {
+	gpios = <&msmgpio 28 GPIO_ACTIVE_HIGH>;
+};
+
+&led_g {
+	gpios = <&msmgpio 30 GPIO_ACTIVE_HIGH>;
+};
+
+&led_b {
+	gpios = <&msmgpio 29 GPIO_ACTIVE_HIGH>;
+};
+
+&leds {
+	bat_1 {
+		label = "bat_1";
+		color = <LED_COLOR_ID_BLUE>;
+		default-state = "off";
+		gpios = <&msmgpio 19 GPIO_ACTIVE_HIGH>;
+	};
+
+	bat_2 {
+		label = "bat_2";
+		color = <LED_COLOR_ID_BLUE>;
+		default-state = "off";
+		gpios = <&msmgpio 22 GPIO_ACTIVE_HIGH>;
+	};
+
+	bat_3 {
+		label = "bat_3";
+		color = <LED_COLOR_ID_BLUE>;
+		default-state = "off";
+		gpios = <&msmgpio 21 GPIO_ACTIVE_HIGH>;
+	};
+
+	bat_4 {
+		label = "bat_4";
+		color = <LED_COLOR_ID_BLUE>;
+		default-state = "off";
+		gpios = <&msmgpio 20 GPIO_ACTIVE_HIGH>;
+	};
+
+	wifi_s: wifi_s {
+		color = <LED_COLOR_ID_BLUE>;
+		default-state = "off";
+		function = LED_FUNCTION_WLAN;
+		gpios = <&msmgpio 27 GPIO_ACTIVE_HIGH>;
+	};
+};
+
+&mpss {
+	pinctrl-0 = <&sim_ctrl_default>;
+	pinctrl-names = "default";
+};
+
+&button_default {
+	pins = "gpio34";
+	bias-pull-up;
+};
+
+&gpio_leds_default {
+	pins = "gpio19", "gpio20", "gpio21", "gpio22", "gpio27", "gpio28", "gpio29", "gpio30";
+};
+
+&pm8916_bms {
+	status = "okay";
+
+	monitored-battery = <&battery>;
+	power-supplies = <&pm8916_charger>;
+};
+
+&pm8916_charger {
+	status = "okay";
+
+	qcom,vdd-safe = <4380000>;
+	qcom,ibat-safe = <1000000>;
+
+	monitored-battery = <&battery>;
+};
+
+&sdhc_2 {
+	status = "okay";
+
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on &sdc2_cd_on>;
+	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off &sdc2_cd_off>;
+};
+
+&usb {
+	dr_mode = "otg";
+	extcon = <&pm8916_charger>, <&usb_id>;
+};
+
+&usb_hs_phy {
+	extcon = <&pm8916_charger>;
+};
+
+/* This selects the external SIM card slot by default */
+&msmgpio {
+	sim_ctrl_default: sim-ctrl-default-state {
+		esim-sel-pins {
+			pins = "gpio50", "gpio51";
+			bias-disable;
+			output-low;
+		};
+
+		sim-en-pins {
+			pins = "gpio24";
+			bias-disable;
+			output-low;
+		};
+
+		sim-sel-pins {
+			pins = "gpio49";
+			bias-disable;
+			output-high;
+		};
+	};
+
+	usb_id_default: usb-id-default {
+		pins = "gpio110";
+		function = "gpio";
+
+		drive-strength = <8>;
+		input-enable;
+		bias-pull-up;
+	};
+};
+
+/*
+ * The modem firmware sends a "query_size" memshare request for client ID 1,
+ * but basically does not do anything with it. GPS works only if:
+ *   - Memshare is not present or
+ *   - Memshare replies to the request with an error
+ * Overall it seems pointless to enable memshare for this device.
+ */
+/*
+&memshare {
+status = "disabled";
+};
+*/
+
+&blsp_dma {
+	status = "okay";
+};
+
+&blsp1_uart2 {
+	status = "okay";
+};
+
+&lpass {
+	status = "okay";
+};
+
+&pronto {
+	status = "okay";
+};
+
+&sdhc_1 {
+	status = "okay";
+
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on>;
+	pinctrl-1 = <&sdc1_clk_off &sdc1_cmd_off &sdc1_data_off>;
+};
+
+&sound {
+	status = "disabled";
+};
+
+&usb {
+	status = "okay";
+	extcon = <&usb_id>, <&usb_id>;
+};
+
+&usb_hs_phy {
+	v1p8-supply = <&pm8916_l7>;
+	v3p3-supply = <&pm8916_l13>;
+	extcon = <&usb_id>;
+};
+
+&msmgpio {
+	usb_id_default: usb-id-default {
+		pins = "gpio110";
+		function = "gpio";
+
+		drive-strength = <8>;
+		input-enable;
+		bias-pull-up;
+	};
+};
+
+&smd_rpm_regulators {
+	vdd_l1_l2_l3-supply = <&pm8916_s3>;
+	vdd_l4_l5_l6-supply = <&pm8916_s4>;
+	vdd_l7-supply = <&pm8916_s4>;
+
+	s3 {
+		regulator-min-microvolt = <1200000>;
+		regulator-max-microvolt = <1300000>;
+	};
+
+	s4 {
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <2100000>;
+	};
+
+	l1 {
+		regulator-min-microvolt = <1225000>;
+		regulator-max-microvolt = <1225000>;
+	};
+
+	l2 {
+		regulator-min-microvolt = <1200000>;
+		regulator-max-microvolt = <1200000>;
+	};
+
+	l4 {
+		regulator-min-microvolt = <2050000>;
+		regulator-max-microvolt = <2050000>;
+	};
+
+	l5 {
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1800000>;
+	};
+
+	l6 {
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1800000>;
+	};
+
+	l7 {
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1800000>;
+	};
+
+	l8 {
+		regulator-min-microvolt = <2850000>;
+		regulator-max-microvolt = <2900000>;
+	};
+
+	l9 {
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+	};
+
+	l10 {
+		regulator-min-microvolt = <2700000>;
+		regulator-max-microvolt = <2800000>;
+	};
+
+	l11 {
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <2950000>;
+		regulator-allow-set-load;
+		regulator-system-load = <200000>;
+	};
+
+	l12 {
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <2950000>;
+	};
+
+	l13 {
+		regulator-min-microvolt = <3075000>;
+		regulator-max-microvolt = <3075000>;
+	};
+
+	l14 {
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <3300000>;
+	};
+
+	l15 {
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <3300000>;
+	};
+
+	l16 {
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <3300000>;
+	};
+
+	l17 {
+		regulator-min-microvolt = <2850000>;
+		regulator-max-microvolt = <2850000>;
+		regulator-always-on;
+	};
+
+	l18 {
+		regulator-min-microvolt = <2700000>;
+		regulator-max-microvolt = <2700000>;
+	};
+};
