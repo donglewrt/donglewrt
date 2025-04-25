@@ -2,6 +2,9 @@
 
 [ "${ACTION}" = "released" ] || exit 0
 
-exec /sbin/poweroff
+if [ "$SEEN" -ge 3 ]
+then
+	exec /sbin/poweroff
+fi
 
 return 0

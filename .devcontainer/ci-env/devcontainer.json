@@ -1,12 +1,35 @@
 {
-  "name": "CI build container",
-  "image": "ghcr.io/openwrt/buildbot/buildworker-v3.8.0:v9",
+  "name": "OpenWrt Development",
+  "image": "debian:bullseye",
   "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": "true",
+      "username": "vscode",
+      "userUid": "1000",
+      "userGid": "1000"
+    },
+    "ghcr.io/devcontainers/features/git:1": {}
   },
-  "remoteUser": "buildbot",
+
+  "runArgs": [
+    "--cap-add=SYS_PTRACE",
+    "--security-opt", "seccomp=unconfined"
+  ],
+
+  "onCreateCommand": "apt-get update && apt-get install -y build-essential ccache ecj fastjar file g++ gawk gettext git java-propose-classpath libelf-dev libncurses5-dev libncursesw5-dev libssl-dev python python3 python3-distutils python3-setuptools rsync unzip wget zlib1g-dev",
+
+  "remoteUser": "vscode",
+
   "customizations": {
     "vscode": {
-      "extensions": ["ms-vscode.cpptools", "plorefice.devicetree"]
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.makefile-tools",
+        "eamodio.gitlens"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
     }
-  }
+  },
 }
