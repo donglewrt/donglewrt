@@ -17,12 +17,36 @@ Note:
 - For more details, please see [Build system setup](https://openwrt.org/docs/guide-developer/build-system/install-buildsystem) documentation.
 
 ### Quickstart
-1. Run `git clone -b <branch> --single-branch --filter=blob:none https://github.com/donglewrt/donglewrt` to clone the source code.
-2. Run `cd donglewrt` to enter source directory.
-3. Run `./scripts/feeds update -a` to obtain all the latest package definitions defined in feeds.conf / feeds.conf.default
-4. Run `./scripts/feeds install -a` to install symlinks for all obtained packages into package/feeds/
-5. Run `make menuconfig` to select your preferred configuration for the toolchain, target system & firmware packages.
-6. Run `make` to build your firmware. This will download all sources, build the cross-compile toolchain and then cross-compile the GNU/Linux kernel & all chosen applications for your target system.
+1. Clone the source code.
+   ```bash
+   git clone -b <branch> --single-branch --filter=blob:none https://github.com/donglewrt/donglewrt
+   ```
+
+2. Enter source directory.
+   ```bash
+   cd donglewrt
+   ```
+
+3. Obtain all the latest package definitions defined in feeds.conf / feeds.conf.default
+   ```bash
+   ./scripts/feeds update -a
+   ```
+
+4. Install symlinks for all obtained packages into package/feeds/
+   ```bash
+   ./scripts/feeds install -a
+   ```
+
+5. Select your preferred configuration for the toolchain, target system & firmware packages.
+   ```bash
+   make menuconfig
+   ```
+
+6. Build your firmware. This will download all sources, build the cross-compile toolchain and then cross-compile the GNU/Linux kernel & all chosen applications for your target system.
+   ```bash
+   make
+   ```
+
 
 ### Related Repositories
 The main repository uses multiple sub-repositories to manage packages of different categories. All packages are installed via the OpenWrt package manager called opkg. If you're looking to develop the web interface or port packages to ImmortalWrt, please find the fitting repository below.
