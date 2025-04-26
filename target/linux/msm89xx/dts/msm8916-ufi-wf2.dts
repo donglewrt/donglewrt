@@ -5,8 +5,8 @@
 #include "msm8916-mifi.dtsi"
 
 / {
-	model = "ufi-wf2 4G Modem Stick";
-	compatible = "xinxun,wf2", "qcom,msm8916";
+	model = "Xinxun 4G Modem Stick (WF2)";
+	compatible = "thwc,wf2", "qcom,msm8916";
 	leds: leds {
 		sim_sel {
 			label = "sim:sel";

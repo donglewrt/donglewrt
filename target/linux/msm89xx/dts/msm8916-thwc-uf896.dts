@@ -5,7 +5,7 @@
 #include "msm8916-ufi.dtsi"
 
 / {
-	model = "uf896 4G Modem Stick";
+	model = "THWC 4G Modem Stick (UF896)";
 	compatible = "thwc,uf896", "qcom,msm8916";
 };
 

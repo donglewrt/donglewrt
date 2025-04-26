@@ -5,7 +5,7 @@
 #include "msm8916-ufi.dtsi"
 
 / {
-	model = "ufi-mf32 4G Modem Stick";
+	model = "Xinxun 4G Modem Stick (MF32)";
 	compatible = "thwc,ufi-mf32", "qcom,msm8916";
 
     battery: battery {

@@ -103,7 +103,7 @@ define Device/openstick-wf2
   $(Device/msm8916)
   DEVICE_VENDOR := XinXun
   DEVICE_MODEL := OpenStick WF2
-  DEVICE_DTS := msm8916-xinxun-wf2
+  DEVICE_DTS := msm8916-ufi-wf2
   DEVICE_DTS_DIR := ../dts
   DEVICE_PACKAGES := openstick-tweaks wpad-basic-wolfssl qcom-msm8916-modem-openstick-wf2-firmware qcom-msm8916-openstick-wf2-wcnss-firmware qcom-msm8916-wcnss-openstick-wf2-nv kmod-gpio-button-hotplug kmod-button-hotplug kmod-input-gpio-keys kmod-input-gpio-keys-polled
 endef

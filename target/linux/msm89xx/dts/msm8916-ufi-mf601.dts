@@ -5,7 +5,7 @@
 	#address-cells = <0x02>;
 	#size-cells = <0x02>;
 	chassis-type = "embedded";
-	model = "MF601_MC_V05 (4G) jsbsbxjxh66+compile";
+	model = "Xinxun 4G Modem Stick (MF601 v5)";
 	compatible = "jsbsbxjxh66,MF601_MC_V05\0qcom,msm8916";
 
 	aliases {
