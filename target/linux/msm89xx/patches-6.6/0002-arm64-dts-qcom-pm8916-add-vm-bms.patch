@@ -1,7 +1,7 @@
-From 749085cbbc68d25a3f6d8c5ef348829a7979eab0 Mon Sep 17 00:00:00 2001
+From 1da4bff41af9e5ef77bae5b419c078628b1f74f5 Mon Sep 17 00:00:00 2001
 From: huskcasaca <100605532+huskcasaca@users.noreply.github.com>
 Date: Mon, 28 Apr 2025 15:51:07 +0800
-Subject: [PATCH 2/3] arm64: dts: qcom: pm8916: add vm bms
+Subject: [PATCH 2/4] arm64: dts: qcom: pm8916: add vm bms
 
 ---
  arch/arm64/boot/dts/qcom/pm8916.dtsi |   7 +

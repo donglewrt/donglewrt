@@ -2679,3 +2679,5 @@
 					 <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
 	};
 };
+
+#include "msm8916-pins.dtsi"
