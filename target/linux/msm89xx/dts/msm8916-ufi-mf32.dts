@@ -50,26 +50,26 @@
 
 	usb_id: usb-id {
 		compatible = "linux,extcon-usb-gpio";
-		id-gpio = <&msmgpio 110 GPIO_ACTIVE_HIGH>;
+		id-gpio = <&tlmm 110 GPIO_ACTIVE_HIGH>;
 		pinctrl-names = "default";
 		pinctrl-0 = <&usb_id_default>;
 	};
 };
 
 &button_restart {
-	gpios = <&msmgpio 34 GPIO_ACTIVE_LOW>;
+	gpios = <&tlmm 34 GPIO_ACTIVE_LOW>;
 };
 
 &led_r {
-	gpios = <&msmgpio 28 GPIO_ACTIVE_HIGH>;
+	gpios = <&tlmm 28 GPIO_ACTIVE_HIGH>;
 };
 
 &led_g {
-	gpios = <&msmgpio 30 GPIO_ACTIVE_HIGH>;
+	gpios = <&tlmm 30 GPIO_ACTIVE_HIGH>;
 };
 
 &led_b {
-	gpios = <&msmgpio 29 GPIO_ACTIVE_HIGH>;
+	gpios = <&tlmm 29 GPIO_ACTIVE_HIGH>;
 };
 
 &leds {
@@ -77,35 +77,35 @@
 		label = "bat_1";
 		color = <LED_COLOR_ID_BLUE>;
 		default-state = "off";
-		gpios = <&msmgpio 19 GPIO_ACTIVE_HIGH>;
+		gpios = <&tlmm 19 GPIO_ACTIVE_HIGH>;
 	};
 
 	bat_2 {
 		label = "bat_2";
 		color = <LED_COLOR_ID_BLUE>;
 		default-state = "off";
-		gpios = <&msmgpio 22 GPIO_ACTIVE_HIGH>;
+		gpios = <&tlmm 22 GPIO_ACTIVE_HIGH>;
 	};
 
 	bat_3 {
 		label = "bat_3";
 		color = <LED_COLOR_ID_BLUE>;
 		default-state = "off";
-		gpios = <&msmgpio 21 GPIO_ACTIVE_HIGH>;
+		gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
 	};
 
 	bat_4 {
 		label = "bat_4";
 		color = <LED_COLOR_ID_BLUE>;
 		default-state = "off";
-		gpios = <&msmgpio 20 GPIO_ACTIVE_HIGH>;
+		gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
 	};
 
 	wifi_s: wifi_s {
 		color = <LED_COLOR_ID_BLUE>;
 		default-state = "off";
 		function = LED_FUNCTION_WLAN;
-		gpios = <&msmgpio 27 GPIO_ACTIVE_HIGH>;
+		gpios = <&tlmm 27 GPIO_ACTIVE_HIGH>;
 	};
 };
 
@@ -157,7 +157,7 @@
 };
 
 /* This selects the external SIM card slot by default */
-&msmgpio {
+&tlmm {
 	sim_ctrl_default: sim-ctrl-default-state {
 		esim-sel-pins {
 			pins = "gpio50", "gpio51";

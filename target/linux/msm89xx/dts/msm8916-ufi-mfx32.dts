@@ -50,26 +50,26 @@
 
 	usb_id: usb-id {
 		compatible = "linux,extcon-usb-gpio";
-		id-gpio = <&msmgpio 110 GPIO_ACTIVE_HIGH>;
+		id-gpio = <&tlmm 110 GPIO_ACTIVE_HIGH>;
 		pinctrl-names = "default";
 		pinctrl-0 = <&usb_id_default>;
 	};
 };
 
 &button_restart {
-	gpios = <&msmgpio 37 GPIO_ACTIVE_LOW>;
+	gpios = <&tlmm 37 GPIO_ACTIVE_LOW>;
 };
 
 &led_r {
-	gpios = <&msmgpio 70 GPIO_ACTIVE_HIGH>;
+	gpios = <&tlmm 70 GPIO_ACTIVE_HIGH>;
 };
 
 &led_g {
-	gpios = <&msmgpio 72 GPIO_ACTIVE_HIGH>;
+	gpios = <&tlmm 72 GPIO_ACTIVE_HIGH>;
 };
 
 &led_b {
-	gpios = <&msmgpio 71 GPIO_ACTIVE_HIGH>;
+	gpios = <&tlmm 71 GPIO_ACTIVE_HIGH>;
 };
 
 &leds {
@@ -77,56 +77,56 @@
 		color = <LED_COLOR_ID_GREEN>;
 		function = LED_FUNCTION_WAN;
 		default-state = "off";
-		gpios = <&msmgpio 72 GPIO_ACTIVE_HIGH>;
+		gpios = <&tlmm 72 GPIO_ACTIVE_HIGH>;
 	};
 
 	led_wan_blue {
 		color = <LED_COLOR_ID_BLUE>;
 		function = LED_FUNCTION_WAN;
 		default-state = "off";
-		gpios = <&msmgpio 71 GPIO_ACTIVE_HIGH>;
+		gpios = <&tlmm 71 GPIO_ACTIVE_HIGH>;
 	};
 
 	led_wan_red {
 		color = <LED_COLOR_ID_RED>;
 		function = LED_FUNCTION_WAN;
 		default-state = "off";
-		gpios = <&msmgpio 70 GPIO_ACTIVE_HIGH>;
+		gpios = <&tlmm 70 GPIO_ACTIVE_HIGH>;
 	};
 
 	led_wlan {
 		color = <LED_COLOR_ID_BLUE>;
 		function = LED_FUNCTION_WLAN;
 		default-state = "off";
-		gpios = <&msmgpio 73 GPIO_ACTIVE_HIGH>;
+		gpios = <&tlmm 73 GPIO_ACTIVE_HIGH>;
 	};
 
 	led_battery_1 {
 		label = "battery1";
 		color = <LED_COLOR_ID_BLUE>;
 		default-state = "off";
-		gpios = <&msmgpio 0 GPIO_ACTIVE_HIGH>;
+		gpios = <&tlmm 0 GPIO_ACTIVE_HIGH>;
 	};
 
 	led_battery_2 {
 		label = "battery2";
 		color = <LED_COLOR_ID_BLUE>;
 		default-state = "off";
-		gpios = <&msmgpio 91 GPIO_ACTIVE_HIGH>;
+		gpios = <&tlmm 91 GPIO_ACTIVE_HIGH>;
 	};
 
 	led_battery_3 {
 		label = "battery3";
 		color = <LED_COLOR_ID_BLUE>;
 		default-state = "off";
-		gpios = <&msmgpio 1 GPIO_ACTIVE_HIGH>;
+		gpios = <&tlmm 1 GPIO_ACTIVE_HIGH>;
 	};
 
 	led_battery_4 {
 		label = "battery4";
 		color = <LED_COLOR_ID_BLUE>;
 		default-state = "off";
-		gpios = <&msmgpio 100 GPIO_ACTIVE_HIGH>;
+		gpios = <&tlmm 100 GPIO_ACTIVE_HIGH>;
 	};
 };
 
@@ -178,7 +178,7 @@
 };
 
 /* This selects the external SIM card slot by default */
-&msmgpio {
+&tlmm {
 	sim_ctrl_default: sim-ctrl-default-state {
 
 		ftest-en-pins {

@@ -10,44 +10,44 @@
 	leds: leds {
 		sim_sel {
 			label = "sim:sel";
-			gpios = <&msmgpio 97 GPIO_ACTIVE_HIGH>;
+			gpios = <&tlmm 97 GPIO_ACTIVE_HIGH>;
 			default-state = "on";
 		};
 
 		sim_en {
 			label = "sim:en";
-			gpios = <&msmgpio 108 GPIO_ACTIVE_HIGH>;
+			gpios = <&tlmm 108 GPIO_ACTIVE_HIGH>;
 			default-state = "off";
 		};
 
 		sim_sel2 {
 			label = "sim:sel2";
-			gpios = <&msmgpio 98 GPIO_ACTIVE_HIGH>;
+			gpios = <&tlmm 98 GPIO_ACTIVE_HIGH>;
 			default-state = "off";
 		};
 
 		sim_en2 {
 			label = "sim:en2";
-			gpios = <&msmgpio 38 GPIO_ACTIVE_HIGH>;
+			gpios = <&tlmm 38 GPIO_ACTIVE_HIGH>;
 			default-state = "off";
 		};
 	};
 };
 
 &button_restart {
-	gpios = <&msmgpio 37 GPIO_ACTIVE_HIGH>;
+	gpios = <&tlmm 37 GPIO_ACTIVE_HIGH>;
 };
 
 &led_r {
-	gpios = <&msmgpio 31 GPIO_ACTIVE_HIGH>;
+	gpios = <&tlmm 31 GPIO_ACTIVE_HIGH>;
 };
 
 &led_g {
-	gpios = <&msmgpio 12 GPIO_ACTIVE_HIGH>;
+	gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
 };
 
 &led_b {
-	gpios = <&msmgpio 22 GPIO_ACTIVE_HIGH>;
+	gpios = <&tlmm 22 GPIO_ACTIVE_HIGH>;
 };
 
 &button_default {
