@@ -2,7 +2,7 @@
 
 /dts-v1/;
 
-#include "msm8916-mifi.dtsi"
+#include "msm8916-ufi.dtsi"
 
 / {
 	model = "Xinxun 4G Modem Stick (WF2)";

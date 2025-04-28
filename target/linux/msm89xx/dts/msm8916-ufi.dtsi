@@ -9,7 +9,8 @@
 	chassis-type = "embedded";
 
 	aliases {
-		serial0 = &blsp1_uart2;
+		mmc0 = &sdhc_1; /* eMMC */
+		serial0 = &blsp_uart2;
 	};
 
 	chosen {
@@ -43,7 +44,7 @@
 		};
 	};
 
-	leds: leds {
+	leds {
 		compatible = "gpio-leds";
 
 		pinctrl-0 = <&gpio_leds_default>;
@@ -72,12 +73,6 @@
 			function = LED_FUNCTION_WAN;
 		};
 	};
-	usb_id: usb-id {
-		compatible = "linux,extcon-usb-gpio";
-		id-gpio = <&msmgpio 110 GPIO_ACTIVE_HIGH>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&usb_id_default>;
-	};
 };
 
 &bam_dmux {
@@ -88,11 +83,11 @@
 	status = "okay";
 };
 
-&blsp1_uart2 {
+&blsp_uart2 {
 	status = "okay";
 };
 
-/* Remove &dsi_phy0 from clocks to make sure that gcc probes with display disabled */
+/* Remove &mdss_dsi0_phy from clocks to make sure that gcc probes with display disabled */
 &gcc {
 	clocks = <&xo_board>, <&sleep_clk>, <0>, <0>, <0>, <0>, <0>;
 };
@@ -117,28 +112,16 @@
 	status = "okay";
 };
 
-//&usb {
-//	extcon = <&pm8916_usbin>;
-//	dr_mode = "peripheral";
-//
-//	status = "okay";
-//};
-
-//&usb_hs_phy {
-//	extcon = <&pm8916_usbin>;
-//};
-
 &usb {
+	extcon = <&pm8916_usbin>;
+	dr_mode = "peripheral";
+
 	status = "okay";
-	extcon = <&usb_id>, <&usb_id>;
 };
 
 &usb_hs_phy {
-	v1p8-supply = <&pm8916_l7>;
-	v3p3-supply = <&pm8916_l13>;
-	extcon = <&usb_id>;
+	extcon = <&pm8916_usbin>;
 };
-
 
 &smd_rpm_regulators {
 	vdd_l1_l2_l3-supply = <&pm8916_s3>;
@@ -243,7 +226,7 @@
 	};
 };
 
-&msmgpio {
+&tlmm {
 	/* pins are board-specific */
 	button_default: button-default-state {
 		function = "gpio";
@@ -254,17 +237,5 @@
 		function = "gpio";
 		drive-strength = <2>;
 		bias-disable;
-	};
-	
-	usb_id_default: usb-id-default {
-		pins = "gpio110";
-		function = "gpio";
-
-		drive-strength = <8>;
-		input-enable;
-		bias-pull-up;
-	};
-
-	sim_ctrl_default: sim-ctrl-default-state {
 	};
 };
