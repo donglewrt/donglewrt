@@ -57,55 +57,76 @@
 };
 
 &button_restart {
-	gpios = <&msmgpio 34 GPIO_ACTIVE_LOW>;
+	gpios = <&msmgpio 37 GPIO_ACTIVE_LOW>;
 };
 
 &led_r {
-	gpios = <&msmgpio 28 GPIO_ACTIVE_HIGH>;
+	gpios = <&msmgpio 70 GPIO_ACTIVE_HIGH>;
 };
 
 &led_g {
-	gpios = <&msmgpio 30 GPIO_ACTIVE_HIGH>;
+	gpios = <&msmgpio 72 GPIO_ACTIVE_HIGH>;
 };
 
 &led_b {
-	gpios = <&msmgpio 29 GPIO_ACTIVE_HIGH>;
+	gpios = <&msmgpio 71 GPIO_ACTIVE_HIGH>;
 };
 
 &leds {
-	bat_1 {
-		label = "bat_1";
-		color = <LED_COLOR_ID_BLUE>;
+	led_wan_green {
+		color = <LED_COLOR_ID_GREEN>;
+		function = LED_FUNCTION_WAN;
 		default-state = "off";
-		gpios = <&msmgpio 19 GPIO_ACTIVE_HIGH>;
+		gpios = <&msmgpio 72 GPIO_ACTIVE_HIGH>;
 	};
 
-	bat_2 {
-		label = "bat_2";
+	led_wan_blue {
 		color = <LED_COLOR_ID_BLUE>;
+		function = LED_FUNCTION_WAN;
 		default-state = "off";
-		gpios = <&msmgpio 22 GPIO_ACTIVE_HIGH>;
+		gpios = <&msmgpio 71 GPIO_ACTIVE_HIGH>;
 	};
 
-	bat_3 {
-		label = "bat_3";
-		color = <LED_COLOR_ID_BLUE>;
+	led_wan_red {
+		color = <LED_COLOR_ID_RED>;
+		function = LED_FUNCTION_WAN;
 		default-state = "off";
-		gpios = <&msmgpio 21 GPIO_ACTIVE_HIGH>;
+		gpios = <&msmgpio 70 GPIO_ACTIVE_HIGH>;
 	};
 
-	bat_4 {
-		label = "bat_4";
+	led_wlan {
 		color = <LED_COLOR_ID_BLUE>;
-		default-state = "off";
-		gpios = <&msmgpio 20 GPIO_ACTIVE_HIGH>;
-	};
-
-	wifi_s: wifi_s {
-		color = <LED_COLOR_ID_BLUE>;
-		default-state = "off";
 		function = LED_FUNCTION_WLAN;
-		gpios = <&msmgpio 27 GPIO_ACTIVE_HIGH>;
+		default-state = "off";
+		gpios = <&msmgpio 73 GPIO_ACTIVE_HIGH>;
+	};
+
+	led_battery_1 {
+		label = "battery1";
+		color = <LED_COLOR_ID_BLUE>;
+		default-state = "off";
+		gpios = <&msmgpio 0 GPIO_ACTIVE_HIGH>;
+	};
+
+	led_battery_2 {
+		label = "battery2";
+		color = <LED_COLOR_ID_BLUE>;
+		default-state = "off";
+		gpios = <&msmgpio 91 GPIO_ACTIVE_HIGH>;
+	};
+
+	led_battery_3 {
+		label = "battery3";
+		color = <LED_COLOR_ID_BLUE>;
+		default-state = "off";
+		gpios = <&msmgpio 1 GPIO_ACTIVE_HIGH>;
+	};
+
+	led_battery_4 {
+		label = "battery4";
+		color = <LED_COLOR_ID_BLUE>;
+		default-state = "off";
+		gpios = <&msmgpio 100 GPIO_ACTIVE_HIGH>;
 	};
 };
 
@@ -115,12 +136,12 @@
 };
 
 &button_default {
-	pins = "gpio34";
+	pins = "gpio37";
 	bias-pull-up;
 };
 
 &gpio_leds_default {
-	pins = "gpio19", "gpio20", "gpio21", "gpio22", "gpio27", "gpio28", "gpio29", "gpio30";
+	pins = "gpio72", "gpio71", "gpio70", "gpio73", "gpio0", "gpio91", "gpio1", "gpio100";
 };
 
 &pm8916_bms {
@@ -159,22 +180,37 @@
 /* This selects the external SIM card slot by default */
 &msmgpio {
 	sim_ctrl_default: sim-ctrl-default-state {
-		esim-sel-pins {
-			pins = "gpio50", "gpio51";
+
+		ftest-en-pins {
+			function = "gpio";
+			drive-strength = <2>;
+			pins = "gpio32";
 			bias-disable;
-			output-low;
+			output-high;
 		};
 
 		sim-en-pins {
-			pins = "gpio24";
+			function = "gpio";
+			drive-strength = <2>;
+			pins = "gpio119";
+			bias-disable;
+			output-high;
+		};
+
+		esim-en-pins {
+			function = "gpio";
+			drive-strength = <2>;
+			pins = "gpio14", "gpio12";
 			bias-disable;
 			output-low;
 		};
 
-		sim-sel-pins {
-			pins = "gpio49";
+		sim-hotplug-pins {
+			function = "gpio";
+			drive-strength = <2>;
+			pins = "gpio114";
 			bias-disable;
-			output-high;
+			output-low;
 		};
 	};
 

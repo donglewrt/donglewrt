@@ -264,4 +264,7 @@
 		input-enable;
 		bias-pull-up;
 	};
+
+	sim_ctrl_default: sim-ctrl-default-state {
+	};
 };
