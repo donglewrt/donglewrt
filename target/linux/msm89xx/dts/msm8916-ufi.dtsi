@@ -10,6 +10,7 @@
 
 	aliases {
 		mmc0 = &sdhc_1; /* eMMC */
+		mmc1 = &sdhc_2; /* external SD slot */
 		serial0 = &blsp_uart2;
 	};
 
@@ -50,28 +51,6 @@
 		pinctrl-0 = <&gpio_leds_default>;
 		pinctrl-names = "default";
 
-		/*
-		 * GPIOs are board-specific.
-		 * Functions and default-states defined here are fallbacks.
-		 * Feel free to override them if your board is different.
-		 */
-		led_r: led-r {
-			color = <LED_COLOR_ID_RED>;
-			default-state = "on";
-			function = LED_FUNCTION_POWER;
-		};
-
-		led_g: led-g {
-			color = <LED_COLOR_ID_GREEN>;
-			default-state = "off";
-			function = LED_FUNCTION_WLAN;
-		};
-
-		led_b: led-b {
-			color = <LED_COLOR_ID_BLUE>;
-			default-state = "off";
-			function = LED_FUNCTION_WAN;
-		};
 	};
 };
 
@@ -134,5 +113,16 @@
 		function = "gpio";
 		drive-strength = <2>;
 		bias-disable;
+	};
+
+	usb_id_default: usb-id-default {
+		function = "gpio";
+		drive-strength = <8>;
+		input-enable;
+		bias-pull-up;
+	};
+
+	sim_ctrl_default: sim-ctrl-default-state {
+
 	};
 };

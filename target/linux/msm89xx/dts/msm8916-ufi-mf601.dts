@@ -5,47 +5,37 @@
 #include "msm8916-ufi.dtsi"
 
 / {
-	model = "Xinxun 4G Modem Stick (MF601)";
+	model = "THWC 4G Modem Stick (MF601)";
 	compatible = "thwc,ufi-mf601", "qcom,msm8916";
 
 	battery: battery {
 		compatible = "simple-battery";
-		voltage-min-design-microvolt = <3400000>;
-		voltage-max-design-microvolt = <4350000>;
-		charge-full-design-microamp-hours = <2100000>;
-
+		voltage-min-design-microvolt = <2990432>;
+		voltage-max-design-microvolt = <4192992>;
+		energy-full-design-microwatt-hours = <7993120>;
+		charge-full-design-microamp-hours = <20954656>;
 		ocv-capacity-celsius = <25>;
-		ocv-capacity-table-0 = < 4327000 100 >,
-							   < 4264000 95 >,
-							   < 4187000 90 >,
-							   < 4119000 85 >,
-							   < 4069000 80 >,
-							   < 4022000 75 >,
-							   < 3964000 70 >,
-							   < 9624000 65 >,
-							   < 3890000 60 >,
-							   < 3853000 55 >,
-							   < 3801000 50 >,
-							   < 3778000 45 >,
-							   < 3769000 40 >,
-							   < 3766000 35 >,
-							   < 3760000 30 >,
-							   < 3721000 25 >,
-							   < 3660000 20 >,
-							   < 3608000 16 >,
-							   < 3579000 13 >,
-							   < 3563000 11 >,
-							   < 3548000 10 >,
-							   < 3531000 9 >,
-							   < 3520000 8 >,
-							   < 3514000 7 >,
-							   < 3502000 6 >,
-							   < 3495000 5 >,
-							   < 3489000 4 >,
-							   < 3475000 3 >,
-							   < 3460000 2 >,
-							   < 3444000 1 >,
-							   < 3400000 0 >;
+		ocv-capacity-table-0 = <4192992 100>,
+							   <41027680 95>,
+							   <40654840 90>,
+							   <40640160 85>,
+							   <39643680 80>,
+							   <39468752 75>,
+							   <38926904 70>,
+							   <38923520 65>,
+							   <38619472 60>,
+							   <37859744 55>,
+							   <37225104 50>,
+							   <36770208 45>,
+							   <36106304 40>,
+							   <35800768 35>,
+							   <35007584 30>,
+							   <34301600 25>,
+							   <33764480 20>,
+							   <33279296 15>,
+							   <32795360 10>,
+							   <32254176 5>;
+
 	};
 
 	usb_id: usb-id {
@@ -60,52 +50,18 @@
 	gpios = <&tlmm 34 GPIO_ACTIVE_LOW>;
 };
 
-&led_r {
-	gpios = <&tlmm 28 GPIO_ACTIVE_HIGH>;
-};
-
-&led_g {
-	gpios = <&tlmm 30 GPIO_ACTIVE_HIGH>;
-};
-
-&led_b {
-	gpios = <&tlmm 29 GPIO_ACTIVE_HIGH>;
-};
-
 &leds {
-	bat_1 {
-		label = "bat_1";
-		color = <LED_COLOR_ID_BLUE>;
-		default-state = "off";
-		gpios = <&tlmm 19 GPIO_ACTIVE_HIGH>;
+
+	led-r {
+		gpios = <&tlmm 112 GPIO_ACTIVE_HIGH>;
 	};
 
-	bat_2 {
-		label = "bat_2";
-		color = <LED_COLOR_ID_BLUE>;
-		default-state = "off";
-		gpios = <&tlmm 22 GPIO_ACTIVE_HIGH>;
+	led-g {
+		gpios = <&tlmm 114 GPIO_ACTIVE_HIGH>;
 	};
 
-	bat_3 {
-		label = "bat_3";
-		color = <LED_COLOR_ID_BLUE>;
-		default-state = "off";
-		gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
-	};
-
-	bat_4 {
-		label = "bat_4";
-		color = <LED_COLOR_ID_BLUE>;
-		default-state = "off";
-		gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
-	};
-
-	wifi_s: wifi_s {
-		color = <LED_COLOR_ID_BLUE>;
-		default-state = "off";
-		function = LED_FUNCTION_WLAN;
-		gpios = <&tlmm 27 GPIO_ACTIVE_HIGH>;
+	led-b {
+		gpios = <&tlmm 115 GPIO_ACTIVE_HIGH>;
 	};
 };
 
@@ -156,34 +112,33 @@
 	extcon = <&pm8916_charger>;
 };
 
-/* This selects the external SIM card slot by default */
-&tlmm {
-	sim_ctrl_default: sim-ctrl-default-state {
-		esim-sel-pins {
-			pins = "gpio50", "gpio51";
-			bias-disable;
-			output-low;
-		};
+&usb_id_default {
+	pins = "gpio110";
+};
 
-		sim-en-pins {
-			pins = "gpio24";
-			bias-disable;
-			output-low;
-		};
+&sim_ctrl_default {
 
-		sim-sel-pins {
-			pins = "gpio49";
-			bias-disable;
-			output-high;
-		};
+	esim-en-pins {
+		pins = "gpio51";
+		bias-disable;
+		output-low;
 	};
 
-	usb_id_default: usb-id-default {
-		pins = "gpio110";
-		function = "gpio";
+	esim-sel-pins {
+		pins = "gpio50";
+		bias-disable;
+		output-low;
+	};
 
-		drive-strength = <8>;
-		input-enable;
-		bias-pull-up;
+	sim-en-pins {
+		pins = "gpio24";
+		bias-disable;
+		output-low;
+	};
+
+	sim-sel-pins {
+		pins = "gpio49";
+		bias-disable;
+		output-high;
 	};
 };

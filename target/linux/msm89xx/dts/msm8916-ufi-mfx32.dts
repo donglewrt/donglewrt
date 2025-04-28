@@ -5,7 +5,7 @@
 #include "msm8916-ufi.dtsi"
 
 / {
-	model = "Xinxun 4G Modem Stick (MFX32 v2)";
+	model = "THWC 4G Modem Stick (MFX32 v2)";
 	compatible = "thwc,ufi-mfx32", "qcom,msm8916";
 
 	battery: battery {
@@ -60,73 +60,69 @@
 	gpios = <&tlmm 37 GPIO_ACTIVE_LOW>;
 };
 
-&led_r {
-	gpios = <&tlmm 70 GPIO_ACTIVE_HIGH>;
-};
-
-&led_g {
-	gpios = <&tlmm 72 GPIO_ACTIVE_HIGH>;
-};
-
-&led_b {
-	gpios = <&tlmm 71 GPIO_ACTIVE_HIGH>;
-};
-
 &leds {
-	led_wan_green {
-		color = <LED_COLOR_ID_GREEN>;
-		function = LED_FUNCTION_WAN;
-		default-state = "off";
-		gpios = <&tlmm 72 GPIO_ACTIVE_HIGH>;
-	};
-
-	led_wan_blue {
+	led-batt-1 {
+		label = "blue:batt1";
 		color = <LED_COLOR_ID_BLUE>;
-		function = LED_FUNCTION_WAN;
-		default-state = "off";
-		gpios = <&tlmm 71 GPIO_ACTIVE_HIGH>;
+		function = LED_FUNCTION_POWER;
+		default-state = "on";
+		gpios = <&tlmm 0 GPIO_ACTIVE_HIGH>;
 	};
 
-	led_wan_red {
-		color = <LED_COLOR_ID_RED>;
-		function = LED_FUNCTION_WAN;
-		default-state = "off";
-		gpios = <&tlmm 70 GPIO_ACTIVE_HIGH>;
+	led-batt-2 {
+		label = "blue:batt2";
+		color = <LED_COLOR_ID_BLUE>;
+		function = LED_FUNCTION_POWER;
+		default-state = "on";
+		gpios = <&tlmm 91 GPIO_ACTIVE_HIGH>;
 	};
 
-	led_wlan {
+	led-batt-3 {
+		label = "blue:batt3";
+		color = <LED_COLOR_ID_BLUE>;
+		function = LED_FUNCTION_POWER;
+		default-state = "on";
+		gpios = <&tlmm 1 GPIO_ACTIVE_HIGH>;
+	};
+
+	led-batt-4 {
+		label = "blue:batt4";
+		color = <LED_COLOR_ID_BLUE>;
+		function = LED_FUNCTION_POWER;
+		default-state = "on";
+		gpios = <&tlmm 100 GPIO_ACTIVE_HIGH>;
+	};
+
+	led-wlan {
+		label = "blue:wlan";
 		color = <LED_COLOR_ID_BLUE>;
 		function = LED_FUNCTION_WLAN;
 		default-state = "off";
 		gpios = <&tlmm 73 GPIO_ACTIVE_HIGH>;
 	};
 
-	led_battery_1 {
-		label = "battery1";
-		color = <LED_COLOR_ID_BLUE>;
+	led-wan-green {
+		label = "green:wan";
+		color = <LED_COLOR_ID_GREEN>;
+		function = LED_FUNCTION_WAN;
 		default-state = "off";
-		gpios = <&tlmm 0 GPIO_ACTIVE_HIGH>;
+		gpios = <&tlmm 72 GPIO_ACTIVE_HIGH>;
 	};
 
-	led_battery_2 {
-		label = "battery2";
+	led-wan-blue {
+		label = "blue:wan";
 		color = <LED_COLOR_ID_BLUE>;
+		function = LED_FUNCTION_WAN;
 		default-state = "off";
-		gpios = <&tlmm 91 GPIO_ACTIVE_HIGH>;
+		gpios = <&tlmm 71 GPIO_ACTIVE_HIGH>;
 	};
 
-	led_battery_3 {
-		label = "battery3";
-		color = <LED_COLOR_ID_BLUE>;
+	led-wan-red {
+		label = "red:wan";
+		color = <LED_COLOR_ID_RED>;
+		function = LED_FUNCTION_WAN;
 		default-state = "off";
-		gpios = <&tlmm 1 GPIO_ACTIVE_HIGH>;
-	};
-
-	led_battery_4 {
-		label = "battery4";
-		color = <LED_COLOR_ID_BLUE>;
-		default-state = "off";
-		gpios = <&tlmm 100 GPIO_ACTIVE_HIGH>;
+		gpios = <&tlmm 70 GPIO_ACTIVE_HIGH>;
 	};
 };
 
@@ -177,49 +173,33 @@
 	extcon = <&pm8916_charger>;
 };
 
-/* This selects the external SIM card slot by default */
-&tlmm {
-	sim_ctrl_default: sim-ctrl-default-state {
+&usb_id_default {
+	pins = "gpio110";
+};
 
-		ftest-en-pins {
-			function = "gpio";
-			drive-strength = <2>;
-			pins = "gpio32";
-			bias-disable;
-			output-high;
-		};
+&sim_ctrl_default {
 
-		sim-en-pins {
-			function = "gpio";
-			drive-strength = <2>;
-			pins = "gpio119";
-			bias-disable;
-			output-high;
-		};
-
-		esim-en-pins {
-			function = "gpio";
-			drive-strength = <2>;
-			pins = "gpio14", "gpio12";
-			bias-disable;
-			output-low;
-		};
-
-		sim-hotplug-pins {
-			function = "gpio";
-			drive-strength = <2>;
-			pins = "gpio114";
-			bias-disable;
-			output-low;
-		};
+	esim-en-pins {
+		pins = "gpio14";
+		bias-disable;
+		output-low;
 	};
 
-	usb_id_default: usb-id-default {
-		pins = "gpio110";
-		function = "gpio";
+	esim-sel-pins {
+		pins = "gpio12";
+		bias-disable;
+		output-low;
+	};
 
-		drive-strength = <8>;
-		input-enable;
-		bias-pull-up;
+	sim-en-pins {
+		pins = "gpio114";
+		bias-disable;
+		output-low;
+	};
+
+	sim-sel-pins {
+		pins = "gpio119";
+		bias-disable;
+		output-high;
 	};
 };
