@@ -1,0 +1,144 @@
+// SPDX-License-Identifier: GPL-2.0-only
+
+/dts-v1/;
+
+#include "msm8916-ufi.dtsi"
+
+/ {
+	model = "THWC 4G Modem Stick (MF601)";
+	compatible = "thwc,ufi-mf601", "qcom,msm8916";
+
+	battery: battery {
+		compatible = "simple-battery";
+		voltage-min-design-microvolt = <2990432>;
+		voltage-max-design-microvolt = <4192992>;
+		energy-full-design-microwatt-hours = <7993120>;
+		charge-full-design-microamp-hours = <20954656>;
+		ocv-capacity-celsius = <25>;
+		ocv-capacity-table-0 = <4192992 100>,
+							   <41027680 95>,
+							   <40654840 90>,
+							   <40640160 85>,
+							   <39643680 80>,
+							   <39468752 75>,
+							   <38926904 70>,
+							   <38923520 65>,
+							   <38619472 60>,
+							   <37859744 55>,
+							   <37225104 50>,
+							   <36770208 45>,
+							   <36106304 40>,
+							   <35800768 35>,
+							   <35007584 30>,
+							   <34301600 25>,
+							   <33764480 20>,
+							   <33279296 15>,
+							   <32795360 10>,
+							   <32254176 5>;
+
+	};
+
+	usb_id: usb-id {
+		compatible = "linux,extcon-usb-gpio";
+		id-gpio = <&tlmm 110 GPIO_ACTIVE_HIGH>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&usb_id_default>;
+	};
+};
+
+&button_restart {
+	gpios = <&tlmm 34 GPIO_ACTIVE_LOW>;
+};
+
+&leds {
+
+	led-r {
+		gpios = <&tlmm 112 GPIO_ACTIVE_HIGH>;
+	};
+
+	led-g {
+		gpios = <&tlmm 114 GPIO_ACTIVE_HIGH>;
+	};
+
+	led-b {
+		gpios = <&tlmm 115 GPIO_ACTIVE_HIGH>;
+	};
+};
+
+&mpss {
+	pinctrl-0 = <&sim_ctrl_default>;
+	pinctrl-names = "default";
+};
+
+&button_default {
+	pins = "gpio34";
+	bias-pull-up;
+};
+
+&gpio_leds_default {
+	pins = "gpio19", "gpio20", "gpio21", "gpio22", "gpio27", "gpio28", "gpio29", "gpio30";
+};
+
+&pm8916_bms {
+	status = "okay";
+
+	monitored-battery = <&battery>;
+	power-supplies = <&pm8916_charger>;
+};
+
+&pm8916_charger {
+	status = "okay";
+
+	qcom,vdd-safe = <4380000>;
+	qcom,ibat-safe = <1000000>;
+
+	monitored-battery = <&battery>;
+};
+
+&sdhc_2 {
+	status = "okay";
+
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on &sdc2_cd_on>;
+	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off &sdc2_cd_off>;
+};
+
+&usb {
+	dr_mode = "otg";
+	extcon = <&pm8916_charger>, <&usb_id>;
+};
+
+&usb_hs_phy {
+	extcon = <&pm8916_charger>;
+};
+
+&usb_id_default {
+	pins = "gpio110";
+};
+
+&sim_ctrl_default {
+
+	esim-en-pins {
+		pins = "gpio51";
+		bias-disable;
+		output-low;
+	};
+
+	esim-sel-pins {
+		pins = "gpio50";
+		bias-disable;
+		output-low;
+	};
+
+	sim-en-pins {
+		pins = "gpio24";
+		bias-disable;
+		output-low;
+	};
+
+	sim-sel-pins {
+		pins = "gpio49";
+		bias-disable;
+		output-high;
+	};
+};

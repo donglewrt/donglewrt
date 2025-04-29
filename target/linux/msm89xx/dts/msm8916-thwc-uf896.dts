@@ -1,0 +1,38 @@
+// SPDX-License-Identifier: GPL-2.0-only
+
+/dts-v1/;
+
+#include "msm8916-ufi.dtsi"
+
+/ {
+	model = "THWC 4G Modem Stick (UF896)";
+	compatible = "thwc,uf896", "qcom,msm8916";
+};
+
+&button_restart {
+	gpios = <&tlmm 35 GPIO_ACTIVE_LOW>;
+};
+
+&leds {
+
+	led-r {
+		gpios = <&tlmm 82 GPIO_ACTIVE_HIGH>;
+	};
+
+	led-g {
+		gpios = <&tlmm 83 GPIO_ACTIVE_HIGH>;
+	};
+
+	led-b {
+		gpios = <&tlmm 81 GPIO_ACTIVE_HIGH>;
+	};
+};
+
+&button_default {
+	pins = "gpio35";
+	bias-pull-up;
+};
+
+&gpio_leds_default {
+	pins = "gpio81", "gpio82", "gpio83";
+};
