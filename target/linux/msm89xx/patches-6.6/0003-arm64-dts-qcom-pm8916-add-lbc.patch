@@ -1,7 +1,7 @@
 From f9ac3ce6abeb9c3cdbe4c1da189f1f5ee5531b7a Mon Sep 17 00:00:00 2001
 From: huskcasaca <100605532+huskcasaca@users.noreply.github.com>
 Date: Mon, 28 Apr 2025 15:51:18 +0800
-Subject: [PATCH 3/4] arm64: dts: qcom: pm8916: add lbc
+Subject: [PATCH 3/3] arm64: dts: qcom: pm8916: add lbc
 
 ---
  arch/arm64/boot/dts/qcom/pm8916.dtsi |   7 +
