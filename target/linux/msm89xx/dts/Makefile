@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: GPL-2.0
+dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-uf896.dtb
+dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-ufi001b.dtb
+dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-ufi001c.dtb
+dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-ufi-mf32.dtb
+dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-ufi-mf601.dtb
+dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-ufi-mfx32.dtb
+dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-ufi-wf2.dtb
+dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
+dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-yiming-uz801v3.dtb
