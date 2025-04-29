@@ -1,0 +1,205 @@
+// SPDX-License-Identifier: GPL-2.0-only
+
+/dts-v1/;
+
+#include "msm8916-ufi.dtsi"
+
+/ {
+	model = "THWC 4G Modem Stick (MFX32 v2)";
+	compatible = "thwc,ufi-mfx32", "qcom,msm8916";
+
+	battery: battery {
+		compatible = "simple-battery";
+		voltage-min-design-microvolt = <3400000>;
+		voltage-max-design-microvolt = <4350000>;
+		charge-full-design-microamp-hours = <2100000>;
+
+		ocv-capacity-celsius = <25>;
+		ocv-capacity-table-0 = < 4327000 100 >,
+							   < 4264000 95 >,
+							   < 4187000 90 >,
+							   < 4119000 85 >,
+							   < 4069000 80 >,
+							   < 4022000 75 >,
+							   < 3964000 70 >,
+							   < 9624000 65 >,
+							   < 3890000 60 >,
+							   < 3853000 55 >,
+							   < 3801000 50 >,
+							   < 3778000 45 >,
+							   < 3769000 40 >,
+							   < 3766000 35 >,
+							   < 3760000 30 >,
+							   < 3721000 25 >,
+							   < 3660000 20 >,
+							   < 3608000 16 >,
+							   < 3579000 13 >,
+							   < 3563000 11 >,
+							   < 3548000 10 >,
+							   < 3531000 9 >,
+							   < 3520000 8 >,
+							   < 3514000 7 >,
+							   < 3502000 6 >,
+							   < 3495000 5 >,
+							   < 3489000 4 >,
+							   < 3475000 3 >,
+							   < 3460000 2 >,
+							   < 3444000 1 >,
+							   < 3400000 0 >;
+	};
+
+	usb_id: usb-id {
+		compatible = "linux,extcon-usb-gpio";
+		id-gpio = <&tlmm 110 GPIO_ACTIVE_HIGH>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&usb_id_default>;
+	};
+};
+
+&button_restart {
+	gpios = <&tlmm 37 GPIO_ACTIVE_LOW>;
+};
+
+&leds {
+	led-batt-1 {
+		label = "blue:batt1";
+		color = <LED_COLOR_ID_BLUE>;
+		function = LED_FUNCTION_POWER;
+		default-state = "on";
+		gpios = <&tlmm 0 GPIO_ACTIVE_HIGH>;
+	};
+
+	led-batt-2 {
+		label = "blue:batt2";
+		color = <LED_COLOR_ID_BLUE>;
+		function = LED_FUNCTION_POWER;
+		default-state = "on";
+		gpios = <&tlmm 91 GPIO_ACTIVE_HIGH>;
+	};
+
+	led-batt-3 {
+		label = "blue:batt3";
+		color = <LED_COLOR_ID_BLUE>;
+		function = LED_FUNCTION_POWER;
+		default-state = "on";
+		gpios = <&tlmm 1 GPIO_ACTIVE_HIGH>;
+	};
+
+	led-batt-4 {
+		label = "blue:batt4";
+		color = <LED_COLOR_ID_BLUE>;
+		function = LED_FUNCTION_POWER;
+		default-state = "on";
+		gpios = <&tlmm 100 GPIO_ACTIVE_HIGH>;
+	};
+
+	led-wlan {
+		label = "blue:wlan";
+		color = <LED_COLOR_ID_BLUE>;
+		function = LED_FUNCTION_WLAN;
+		default-state = "off";
+		gpios = <&tlmm 73 GPIO_ACTIVE_HIGH>;
+	};
+
+	led-wan-green {
+		label = "green:wan";
+		color = <LED_COLOR_ID_GREEN>;
+		function = LED_FUNCTION_WAN;
+		default-state = "off";
+		gpios = <&tlmm 72 GPIO_ACTIVE_HIGH>;
+	};
+
+	led-wan-blue {
+		label = "blue:wan";
+		color = <LED_COLOR_ID_BLUE>;
+		function = LED_FUNCTION_WAN;
+		default-state = "off";
+		gpios = <&tlmm 71 GPIO_ACTIVE_HIGH>;
+	};
+
+	led-wan-red {
+		label = "red:wan";
+		color = <LED_COLOR_ID_RED>;
+		function = LED_FUNCTION_WAN;
+		default-state = "off";
+		gpios = <&tlmm 70 GPIO_ACTIVE_HIGH>;
+	};
+};
+
+&mpss {
+	pinctrl-0 = <&sim_ctrl_default>;
+	pinctrl-names = "default";
+};
+
+&button_default {
+	pins = "gpio37";
+	bias-pull-up;
+};
+
+&gpio_leds_default {
+	pins = "gpio72", "gpio71", "gpio70", "gpio73", "gpio0", "gpio91", "gpio1", "gpio100";
+};
+
+&pm8916_bms {
+	status = "okay";
+
+	monitored-battery = <&battery>;
+	power-supplies = <&pm8916_charger>;
+};
+
+&pm8916_charger {
+	status = "okay";
+
+	qcom,vdd-safe = <4380000>;
+	qcom,ibat-safe = <1000000>;
+
+	monitored-battery = <&battery>;
+};
+
+&sdhc_2 {
+	status = "okay";
+
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on &sdc2_cd_on>;
+	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off &sdc2_cd_off>;
+};
+
+&usb {
+	dr_mode = "otg";
+	extcon = <&pm8916_charger>, <&usb_id>;
+};
+
+&usb_hs_phy {
+	extcon = <&pm8916_charger>;
+};
+
+&usb_id_default {
+	pins = "gpio110";
+};
+
+&sim_ctrl_default {
+
+	esim-en-pins {
+		pins = "gpio14";
+		bias-disable;
+		output-low;
+	};
+
+	esim-sel-pins {
+		pins = "gpio12";
+		bias-disable;
+		output-low;
+	};
+
+	sim-en-pins {
+		pins = "gpio114";
+		bias-disable;
+		output-low;
+	};
+
+	sim-sel-pins {
+		pins = "gpio119";
+		bias-disable;
+		output-high;
+	};
+};

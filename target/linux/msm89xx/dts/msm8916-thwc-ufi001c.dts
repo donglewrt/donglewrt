@@ -1,0 +1,63 @@
+// SPDX-License-Identifier: GPL-2.0-only
+
+/dts-v1/;
+
+#include "msm8916-ufi.dtsi"
+
+/ {
+	model = "THWC 4G Modem Stick (UFI001C)";
+	compatible = "thwc,ufi001c", "qcom,msm8916";
+};
+
+&button_restart {
+	gpios = <&tlmm 37 GPIO_ACTIVE_HIGH>;
+};
+
+&button_default {
+	pins = "gpio37";
+	bias-pull-down;
+};
+
+
+&leds {
+	sim-sel {
+		label = "sim:sel";
+		gpios = <&tlmm 2 GPIO_ACTIVE_HIGH>;
+		default-state = "on";
+	};
+
+	sim-en {
+		label = "sim:en";
+		gpios = <&tlmm 1 GPIO_ACTIVE_HIGH>;
+		default-state = "off";
+	};
+
+	sim-sel2 {
+		label = "sim:sel2";
+		gpios = <&tlmm 0 GPIO_ACTIVE_HIGH>;
+		default-state = "off";
+	};
+
+	sim-en2 {
+		label = "sim:en2";
+		gpios = <&tlmm 3 GPIO_ACTIVE_HIGH>;
+		default-state = "off";
+	};
+
+	led-r {
+		gpios = <&tlmm 22 GPIO_ACTIVE_HIGH>;
+	};
+
+	led-g {
+		gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
+	};
+
+	led-b {
+		gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
+	};
+
+};
+
+&gpio_leds_default {
+	pins = "gpio0","gpio1","gpio2","gpio3","gpio20", "gpio21", "gpio22";
+};
